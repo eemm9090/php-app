@@ -7,40 +7,65 @@
 ```html
 <a href="edit.php?todo_id=123&todo_content=焼肉">更新</a>
 ```
+- 
 
 ### 以下のフォームの送信ボタンを押下した際にstore.phpの$_POSTにどんな値が格納されるか説明してください。
 
 ```html
 <form action="store.php" method="post">
     <input type="text" name="id" value="123">
-		<textarea　name="content">焼肉</textarea>
+		<textarea name="content">焼肉</textarea>
     <button type="submit">送信</button>
 </form>
 ```
+- name属性がキーとなり、value属性がバリューとなるような連想配列が格納される。
+- 今回の場合、キーが"id"、バリューが"123"の連想配列と
+- キーが"content"、バリューが"焼肉"が格納されます。
+
 
 ### `require_once()` は何のために記述しているか説明してください。
+- ()内のファイルに記載されているものが使用できるようにするために記述しています。
 
 ### `savePostedData($post)`は何をしているか説明してください。
+- 
 
 ### `header('location: ./index.php')`は何をしているか説明してください。
+- ./index.htmlファイルに遷移します。
 
 ### `getRefererPath()`は何をしているか説明してください。
+- 
 
 ### `connectPdo()` の返り値は何か、またこの記述は何をするための記述か説明してください。
+- connectPdo() 関数はDBとの接続を表すPDOクラスをインスタンス化したものなので、
+- 返り値はPDOクラスのオブジェクトになります。
+- また、この記述をすることでDBとの接続が出来ます。
 
 ### `try catch`とは何か説明してください。
+- プログラムの異常終了によって処理が継続できないというケースを防ぐための記述です。
+- 「try」の｛｝内に例外が起こりそうな内容を記述することで
+- 例外が起きた際に、そのあとに続く「catch」内に記述されている処理を実行します。
 
 ### Pdoクラスをインスタンス化する際に`try catch`が必要な理由を説明してください。
+- PDOクラスはDBとの接続を表すクラスなので、try catchがなかった場合
+- 何かしらの理由でDBに接続されなかった時に、プログラムが異常終了しないためにtry catchの記述が必要です。
 
 ## 新規作成
 
-### `createTodoData($post)`は何をしているか説明してください。
+### `createTodoData($todoText)`は何をしているか説明してください。
+- ①DBへの接続を表すPDOクラスをインスタンス化し「$dbh」に代入しています。
+- ②「$sql」は「todosテーブル」に引数「$todoText」を値としたデータを追加します。
+- ③最後にPDOクラスをインスタンス化しすることでDBに接続し、queryメゾットを用いて、SQL文を実行しています。
 
 ## 一覧
 
 ### `getTodoList()`の返り値について説明してください。
+- 「functions.php」を確認すると「getAllRecords()」が返り値となっています。
+- 「getAllRecords()」は「connection.php」から呼び出しているので確認してみると
+- 返り値が「$sql」に記述したSQＬ文でDBから取り出した全ての配列(fatchAll())となっています。
+- よって、getTodoList()の返り値について、最終的には”「$sql」に記述したSQＬ文でDBから取り出した全ての配列”となります。
 
 ### `<?= ?>`は何の省略形か説明してください。
+- <?php echo ; ?>
 
 ## 更新
 
