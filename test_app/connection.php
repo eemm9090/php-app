@@ -12,7 +12,18 @@ function connectPdo()
     }
 }
 
+//データの取得
+function getAllRecords()
+{
+    $dbh = connectPdo();
+    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL';
+    return $dbh->query($sql)->fetchAll();
+}
+
 // 新規作成処理
+// connectPdoメソッドでPDOクラスをインスタンス化し
+// queryメソッドで$sqlに代入されているSQL文を実行します。
+// SQL文では、todosテーブルのcontentカラムへ$todoTextの値を追加する内容が記載されています。
 function createTodoData($todoText)
 {
     $dbh = connectPdo();
@@ -20,12 +31,30 @@ function createTodoData($todoText)
     $dbh->query($sql);
 }
 
-//データの取得
-function getAllRecords()
+//更新処理
+function updateTodoData($post)
 {
     $dbh = connectPdo();
-    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL';
-    return $dbh->query($sql)->fetchAll();
+    $sql = 'UPDATE todos SET content = "' . $post['content'] . '" WHERE id = ' . $post['id'];
+    $dbh->query($sql);
+}
+
+//編集処理
+function getTodoTextById($id)
+{
+    $dbh = connectPdo();
+    $sql = 'SELECT * FROM todos WHERE deleted_at IS NULL AND id = ' . $id ;
+    $data = $dbh->query($sql)->fetch();
+    return $data['content'];
+}
+
+//削除処理
+function deleteTodoData($id)
+{
+    $dbh = connectPdo();
+    $now = date('Y-m-d H:i:s');
+    $sql = 'UPDATE todos SET deleted_at = "' . $now . '" WHERE id = ' . $id ;
+    $dbh->query($sql);
 }
 
 ?>

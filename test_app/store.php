@@ -1,6 +1,8 @@
 <?php
 require_once('functions.php');
 
-createData($_POST);
+//new.phpファイルから受け取った値を引数にしています。
+getRefererPath($_POST);
+savePostedData($_POST);
 header('Location: ./index.php');
 ?>
